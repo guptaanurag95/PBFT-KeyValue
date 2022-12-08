@@ -1,4 +1,4 @@
-for i in {0..3}
+for i in 0 1 2 3
 do
-   python ./node.py -i $i -lf False &
+   python3 ./node.py -i $i -lf False &
 done

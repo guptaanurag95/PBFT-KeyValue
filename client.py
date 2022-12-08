@@ -134,6 +134,7 @@ class Client:
 
     def __init__(self, conf, args, log):
         self._nodes = conf['nodes']
+        print(self._nodes)
         self._resend_interval = conf['misc']['network_timeout']
         self._client_id = args.client_id
         self._num_messages = args.num_messages
@@ -200,12 +201,14 @@ class Client:
         return web.Response()
 
 
-    async def request(self):
+    async def request(self, request):
+        print("===========================")
         if not self._session:
             timeout = aiohttp.ClientTimeout(self._resend_interval)
             self._session = aiohttp.ClientSession(timeout = timeout)
          
         for i in range(self._num_messages):
+            print("/*****************")
             
             accumulate_failure = 0
             is_sent = False
@@ -265,17 +268,21 @@ def main():
     host = addr['host']
     port = addr['port']
 
-
-    asyncio.ensure_future(client.request())
+    loop = asyncio.get_event_loop()
+    print("===========================")
+    temp = asyncio.ensure_future(client.request(""), loop=loop)
+    # temp = [asyncio.ensure_future(client.request(), loop=loop)]
+    print("===========================")
 
     app = web.Application()
     app.add_routes([
         web.post('/' + Client.REPLY, client.get_reply),
+        web.post('/' + Client.REQUEST, client.request),
     ])
 
     web.run_app(app, host=host, port=port, access_log=None)
 
-
+    result = loop.run_until_complete(temp)
     
     # loop = asyncio.get_event_loop()
     # loop.run_until_complete(client.request())

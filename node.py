@@ -579,7 +579,7 @@ class PBFTHandler:
 
         '''
 
-        
+        print("///////////////////HEREEEE")
         this_slot = str(self._next_propose_slot)
         self._next_propose_slot = int(this_slot) + 1
 
@@ -618,7 +618,9 @@ class PBFTHandler:
                 raise web.HTTPServiceUnavailable()
         else:
             json_data = await request.json()
+            print("====================", json_data)
             await self.preprepare(json_data)
+            print("$$$$$$$$$$$$$$$$", json_data)
             return web.Response()
 
     async def prepare(self, request):
@@ -1188,11 +1190,13 @@ def main():
     addr = conf['nodes'][args.index]
     host = addr['host']
     port = addr['port']
+    print(addr, host, port, "--------------------")
 
     pbft = PBFTHandler(args.index, conf)
 
-    asyncio.ensure_future(pbft.synchronize())
-    asyncio.ensure_future(pbft.garbage_collection())
+    loop = asyncio.get_event_loop()
+    temp = [asyncio.ensure_future(pbft.synchronize(), loop=loop)]
+    temp.append(asyncio.ensure_future(pbft.garbage_collection(), loop=loop))
 
     app = web.Application()
     app.add_routes([
@@ -1208,6 +1212,7 @@ def main():
         ])
 
     web.run_app(app, host=host, port=port, access_log=None)
+    result = loop.run_until_complete(asyncio.gather(*temp))
 
 
 if __name__ == "__main__":
