@@ -743,6 +743,7 @@ class PBFTHandler:
                         slot: json_data['proposal'][slot]
                     },
                     'type': Status.COMMIT
+                    # include request data here
                 }
                 await self._post(self._nodes, PBFTHandler.REPLY, commit_msg)
         return web.Response()
