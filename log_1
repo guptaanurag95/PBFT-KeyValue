@@ -1,0 +1,692 @@
+DEBUG:root:{'nodes': [{'host': 'localhost', 'port': 30000}, {'host': 'localhost', 'port': 30001}, {'host': 'localhost', 'port': 30002}, {'host': 'localhost', 'port': 30003}], 'clients': [{'host': 'localhost', 'port': 20001}, {'host': 'localhost', 'port': 20002}], 'operationSeq': [{'data': 'set a 10'}, {'data': 'get a'}], 'loss%': 0, 'ckpt_interval': 10, 'retry_times_before_view_change': 2, 'sync_interval': 5, 'misc': {'network_timeout': 5}}
+INFO:__main__:---> 1: Create checkpoint.
+DEBUG:asyncio:Using selector: KqueueSelector
+DEBUG:asyncio:Using selector: KqueueSelector
+INFO:__main__:---> 1: receive prepare msg from 0
+INFO:__main__:---> 1: on commit
+INFO:__main__:---> 1: receive preprepare msg from 0
+INFO:__main__:---> 1: on prepare
+DEBUG:__main__:make request to 0, commit
+DEBUG:__main__:make request to 1, commit
+INFO:__main__:---> 1: receive prepare msg from 1
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 2, commit
+DEBUG:__main__:make request to 3, commit
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 2
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+DEBUG:__main__:Add commit certifiacte to slot 0
+INFO:__main__:1 reply to http://localhost:20001/reply successfully!!
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 3
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: receive prepare msg from 0
+INFO:__main__:---> 1: on commit
+INFO:__main__:---> 1: receive preprepare msg from 0
+INFO:__main__:---> 1: on prepare
+DEBUG:__main__:make request to 0, commit
+DEBUG:__main__:make request to 1, commit
+INFO:__main__:---> 1: receive prepare msg from 1
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 2, commit
+DEBUG:__main__:make request to 3, commit
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 2
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+DEBUG:__main__:Add commit certifiacte to slot 1
+INFO:__main__:1 reply to http://localhost:20001/reply successfully!!
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 3
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: receive prepare msg from 0
+INFO:__main__:---> 1: on commit
+INFO:__main__:---> 1: receive preprepare msg from 0
+INFO:__main__:---> 1: on prepare
+DEBUG:__main__:make request to 0, commit
+DEBUG:__main__:make request to 1, commit
+INFO:__main__:---> 1: receive prepare msg from 1
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 2, commit
+DEBUG:__main__:make request to 3, commit
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 2
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+DEBUG:__main__:Add commit certifiacte to slot 2
+INFO:__main__:1 reply to http://localhost:20001/reply successfully!!
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 3
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: receive prepare msg from 0
+INFO:__main__:---> 1: on commit
+INFO:__main__:---> 1: receive preprepare msg from 0
+INFO:__main__:---> 1: on prepare
+DEBUG:__main__:make request to 0, commit
+DEBUG:__main__:make request to 1, commit
+INFO:__main__:---> 1: receive prepare msg from 1
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 2, commit
+DEBUG:__main__:make request to 3, commit
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 2
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+DEBUG:__main__:Add commit certifiacte to slot 3
+INFO:__main__:1 reply to http://localhost:20001/reply successfully!!
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 3
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: receive prepare msg from 0
+INFO:__main__:---> 1: on commit
+INFO:__main__:---> 1: receive preprepare msg from 0
+INFO:__main__:---> 1: on prepare
+DEBUG:__main__:make request to 0, commit
+DEBUG:__main__:make request to 1, commit
+INFO:__main__:---> 1: receive prepare msg from 1
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 2, commit
+DEBUG:__main__:make request to 3, commit
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 2
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+DEBUG:__main__:Add commit certifiacte to slot 4
+INFO:__main__:1 reply to http://localhost:20001/reply successfully!!
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 3
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: receive prepare msg from 0
+INFO:__main__:---> 1: on commit
+INFO:__main__:---> 1: receive preprepare msg from 0
+INFO:__main__:---> 1: on prepare
+DEBUG:__main__:make request to 0, commit
+DEBUG:__main__:make request to 1, commit
+INFO:__main__:---> 1: receive prepare msg from 1
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 2, commit
+DEBUG:__main__:make request to 3, commit
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 2
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+DEBUG:__main__:Add commit certifiacte to slot 5
+INFO:__main__:1 reply to http://localhost:20001/reply successfully!!
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 3
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: receive prepare msg from 0
+INFO:__main__:---> 1: on commit
+INFO:__main__:---> 1: receive preprepare msg from 0
+INFO:__main__:---> 1: on prepare
+DEBUG:__main__:make request to 0, commit
+DEBUG:__main__:make request to 1, commit
+INFO:__main__:---> 1: receive prepare msg from 1
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 2, commit
+DEBUG:__main__:make request to 3, commit
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 2
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+DEBUG:__main__:Add commit certifiacte to slot 6
+INFO:__main__:1 reply to http://localhost:20001/reply successfully!!
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 3
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+DEBUG:root:{'nodes': [{'host': 'localhost', 'port': 30000}, {'host': 'localhost', 'port': 30001}, {'host': 'localhost', 'port': 30002}, {'host': 'localhost', 'port': 30003}], 'clients': [{'host': 'localhost', 'port': 20001}, {'host': 'localhost', 'port': 20002}], 'operationSeq': [{'data': 'set a 10'}, {'data': 'get a'}, {'data': 'set b 10'}, {'data': 'get a'}, {'data': 'get b'}], 'loss%': 0, 'ckpt_interval': 10, 'retry_times_before_view_change': 2, 'sync_interval': 5, 'misc': {'network_timeout': 5}}
+INFO:__main__:---> 1: Create checkpoint.
+DEBUG:asyncio:Using selector: KqueueSelector
+DEBUG:asyncio:Using selector: KqueueSelector
+INFO:__main__:---> 1: receive prepare msg from 0
+INFO:__main__:---> 1: on commit
+INFO:__main__:---> 1: receive preprepare msg from 0
+INFO:__main__:---> 1: on prepare
+DEBUG:__main__:make request to 0, commit
+DEBUG:__main__:make request to 1, commit
+INFO:__main__:---> 1: receive prepare msg from 1
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 2, commit
+DEBUG:__main__:make request to 3, commit
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 2
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+DEBUG:__main__:Add commit certifiacte to slot 0
+INFO:__main__:1 reply to http://localhost:20001/reply successfully!!
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 3
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: receive prepare msg from 0
+INFO:__main__:---> 1: on commit
+INFO:__main__:---> 1: receive preprepare msg from 0
+INFO:__main__:---> 1: on prepare
+DEBUG:__main__:make request to 0, commit
+DEBUG:__main__:make request to 1, commit
+INFO:__main__:---> 1: receive prepare msg from 1
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 2, commit
+DEBUG:__main__:make request to 3, commit
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 2
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+DEBUG:__main__:Add commit certifiacte to slot 1
+INFO:__main__:1 reply to http://localhost:20001/reply successfully!!
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 3
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: receive prepare msg from 0
+INFO:__main__:---> 1: on commit
+INFO:__main__:---> 1: receive preprepare msg from 0
+INFO:__main__:---> 1: on prepare
+DEBUG:__main__:make request to 0, commit
+DEBUG:__main__:make request to 1, commit
+INFO:__main__:---> 1: receive prepare msg from 1
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 2, commit
+DEBUG:__main__:make request to 3, commit
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 2
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+DEBUG:__main__:Add commit certifiacte to slot 2
+INFO:__main__:1 reply to http://localhost:20001/reply successfully!!
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 3
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: receive prepare msg from 0
+INFO:__main__:---> 1: on commit
+INFO:__main__:---> 1: receive preprepare msg from 0
+INFO:__main__:---> 1: on prepare
+DEBUG:__main__:make request to 0, commit
+DEBUG:__main__:make request to 1, commit
+INFO:__main__:---> 1: receive prepare msg from 1
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 2, commit
+DEBUG:__main__:make request to 3, commit
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 2
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+DEBUG:__main__:Add commit certifiacte to slot 3
+INFO:__main__:1 reply to http://localhost:20001/reply successfully!!
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 3
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: receive prepare msg from 0
+INFO:__main__:---> 1: on commit
+INFO:__main__:---> 1: receive preprepare msg from 0
+INFO:__main__:---> 1: on prepare
+DEBUG:__main__:make request to 0, commit
+DEBUG:__main__:make request to 1, commit
+INFO:__main__:---> 1: receive prepare msg from 1
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 2, commit
+DEBUG:__main__:make request to 3, commit
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 2
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+DEBUG:__main__:Add commit certifiacte to slot 4
+INFO:__main__:1 reply to http://localhost:20001/reply successfully!!
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 3
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+DEBUG:root:{'nodes': [{'host': 'localhost', 'port': 30000}, {'host': 'localhost', 'port': 30001}, {'host': 'localhost', 'port': 30002}, {'host': 'localhost', 'port': 30003}], 'clients': [{'host': 'localhost', 'port': 20001}, {'host': 'localhost', 'port': 20002}], 'operationSeq': [{'data': 'set a 10'}, {'data': 'get a'}, {'data': 'set b 10'}, {'data': 'get a'}, {'data': 'get b'}], 'loss%': 0, 'ckpt_interval': 10, 'retry_times_before_view_change': 2, 'sync_interval': 5, 'misc': {'network_timeout': 5}}
+INFO:__main__:---> 1: Create checkpoint.
+DEBUG:asyncio:Using selector: KqueueSelector
+DEBUG:asyncio:Using selector: KqueueSelector
+INFO:__main__:---> 1: receive prepare msg from 0
+INFO:__main__:---> 1: on commit
+INFO:__main__:---> 1: receive preprepare msg from 0
+INFO:__main__:---> 1: on prepare
+DEBUG:__main__:make request to 0, commit
+DEBUG:__main__:make request to 1, commit
+INFO:__main__:---> 1: receive prepare msg from 1
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 2, commit
+DEBUG:__main__:make request to 3, commit
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 2
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+DEBUG:__main__:Add commit certifiacte to slot 0
+INFO:__main__:1 reply to http://localhost:20001/reply successfully!!
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 3
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: receive prepare msg from 0
+INFO:__main__:---> 1: on commit
+INFO:__main__:---> 1: receive preprepare msg from 0
+INFO:__main__:---> 1: on prepare
+DEBUG:__main__:make request to 0, commit
+DEBUG:__main__:make request to 1, commit
+INFO:__main__:---> 1: receive prepare msg from 1
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 2, commit
+DEBUG:__main__:make request to 3, commit
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 2
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+DEBUG:__main__:Add commit certifiacte to slot 1
+INFO:__main__:1 reply to http://localhost:20001/reply successfully!!
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 3
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: receive prepare msg from 0
+INFO:__main__:---> 1: on commit
+INFO:__main__:---> 1: receive preprepare msg from 0
+INFO:__main__:---> 1: on prepare
+DEBUG:__main__:make request to 0, commit
+DEBUG:__main__:make request to 1, commit
+INFO:__main__:---> 1: receive prepare msg from 1
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 2, commit
+DEBUG:__main__:make request to 3, commit
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 2
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+DEBUG:__main__:Add commit certifiacte to slot 2
+INFO:__main__:1 reply to http://localhost:20001/reply successfully!!
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 3
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: receive prepare msg from 0
+INFO:__main__:---> 1: on commit
+INFO:__main__:---> 1: receive preprepare msg from 0
+INFO:__main__:---> 1: on prepare
+DEBUG:__main__:make request to 0, commit
+DEBUG:__main__:make request to 1, commit
+INFO:__main__:---> 1: receive prepare msg from 1
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 2, commit
+DEBUG:__main__:make request to 3, commit
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 2
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+DEBUG:__main__:Add commit certifiacte to slot 3
+INFO:__main__:1 reply to http://localhost:20001/reply successfully!!
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 3
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: receive prepare msg from 0
+INFO:__main__:---> 1: on commit
+INFO:__main__:---> 1: receive preprepare msg from 0
+INFO:__main__:---> 1: on prepare
+DEBUG:__main__:make request to 0, commit
+DEBUG:__main__:make request to 1, commit
+INFO:__main__:---> 1: receive prepare msg from 1
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 2, commit
+DEBUG:__main__:make request to 3, commit
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 2
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+DEBUG:__main__:Add commit certifiacte to slot 4
+INFO:__main__:1 reply to http://localhost:20001/reply successfully!!
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 0
+INFO:__main__:---> 1: receive prepare msg from 3
+INFO:__main__:---> 1: on commit
+DEBUG:__main__:make request to 0, reply
+DEBUG:__main__:make request to 1, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 1
+DEBUG:__main__:make request to 2, reply
+DEBUG:__main__:make request to 3, reply
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 2
+INFO:__main__:---> 1: on reply
+INFO:__main__:---> 1: receive commit msg from 3

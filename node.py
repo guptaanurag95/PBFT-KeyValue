@@ -413,6 +413,28 @@ class ViewChangeVotes:
 
         self.from_nodes.add(json_data['node_index'])
 
+class KeyValueStore:
+    def __init__(self):
+        self.keyValue = {}
+
+    def getValue(self, key):
+        if key in self.keyValue:
+            return self.keyValue[key]
+        return -1
+
+    def setValue(self, key, value):
+        self.keyValue[key] = value
+        return value
+
+    def parseData(self, currS):
+        arr = currS.split(" ")
+        if arr[0] == "get":
+            return self.getValue(arr[1])
+        else:
+            return self.setValue(arr[1], arr[2])
+
+    def printAllValues(self):
+        print(self.keyValue)
 
 class PBFTHandler:
     REQUEST = 'request'
@@ -439,6 +461,8 @@ class PBFTHandler:
         # leader
         self._view = View(0, self._node_cnt)
         self._next_propose_slot = 0
+
+        self._keyValue = KeyValueStore()
 
         # TODO: Test fixed
         if self._index == 0:
@@ -771,15 +795,18 @@ class PBFTHandler:
                     json_data['proposal'][slot])
 
                 self._log.debug("Add commit certifiacte to slot %d", int(slot))
-                
-                # Reply only once and only when no bubble ahead
+                returnV = self._keyValue.parseData(json_data['proposal'][slot]['data']['data'])
+                print(self._keyValue.printAllValues(), "/********************************************/")
+
+            # Reply only once and only when no bubble ahead
                 if self._last_commit_slot == int(slot) - 1 and not status.is_committed:
 
                     reply_msg = {
                         'index': self._index,
                         'view': json_data['view'],
                         'proposal': json_data['proposal'][slot],
-                        'type': Status.REPLY
+                        'type': Status.REPLY,
+                        'data': returnV
                     }
                     status.is_committed = True
                     self._last_commit_slot += 1
@@ -821,7 +848,6 @@ class PBFTHandler:
             status = self._status_by_slot[str(i)]
             proposal = status.commit_certificate._proposal
             commit_decisions.append((proposal['id'], proposal['data']))
-
         return commit_decisions
 
     async def _commit_action(self):
@@ -1174,7 +1200,7 @@ def conf_parse(conf_file) -> dict:
     misc:
         network_timeout: 5
     '''
-    conf = yaml.load(conf_file)
+    conf = yaml.safe_load(conf_file)
     return conf
 
 def main():

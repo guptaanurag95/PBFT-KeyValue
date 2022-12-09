@@ -120,8 +120,12 @@ def conf_parse(conf_file) -> dict:
 
     misc:
         network_timeout: 10
+
+    operationSeq:
+        - data:
+        - data:
     '''
-    conf = yaml.load(conf_file)
+    conf = yaml.safe_load(conf_file)
     return conf
 
 def make_url(node, command):
@@ -152,6 +156,8 @@ class Client:
         self._is_request_succeed = None
         # To record the status of current request
         self._status = None
+        self._dataOp = conf['operationSeq']
+        print(conf['operationSeq'])
 
     async def request_view_change(self):
         json_data = {
@@ -196,6 +202,7 @@ class Client:
 
         if self._status._check_succeed():
             # self._log.info("Get reply from %d", json_data['index'])
+            print("----------IN CLIENT--------", json_data['data'])
             self._is_request_succeed.set()
 
         return web.Response()
@@ -208,7 +215,7 @@ class Client:
             self._session = aiohttp.ClientSession(timeout = timeout)
          
         for i in range(self._num_messages):
-            print("/*****************")
+            print("/*****************", self._dataOp[i])
             
             accumulate_failure = 0
             is_sent = False
@@ -220,7 +227,7 @@ class Client:
                 'id': (self._client_id, i),
                 'client_url': self._client_url + "/" + Client.REPLY,
                 'timestamp': time.time(),
-                'data': str(i)        
+                'data': self._dataOp[i]
             }
 
             while 1:

@@ -14,6 +14,13 @@ clients:
     - host: localhost
       port: 20002
 
+operationSeq:
+  - data: "set a 10"
+  - data: "get a"
+  - data: "set b 10"
+  - data: "get a"
+  - data: "get b"
+
 loss%: 0
 
 ckpt_interval: 10
