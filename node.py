@@ -603,7 +603,6 @@ class PBFTHandler:
 
         '''
 
-        print("///////////////////HEREEEE")
         this_slot = str(self._next_propose_slot)
         self._next_propose_slot = int(this_slot) + 1
 
@@ -642,9 +641,7 @@ class PBFTHandler:
                 raise web.HTTPServiceUnavailable()
         else:
             json_data = await request.json()
-            print("====================", json_data)
             await self.preprepare(json_data)
-            print("$$$$$$$$$$$$$$$$", json_data)
             return web.Response()
 
     async def prepare(self, request):
@@ -797,7 +794,6 @@ class PBFTHandler:
 
                 self._log.debug("Add commit certifiacte to slot %d", int(slot))
                 returnV = self._keyValue.parseData(json_data['proposal'][slot]['data']['data'])
-                print(self._keyValue.printAllValues(), "/********************************************/")
 
             # Reply only once and only when no bubble ahead
                 if self._last_commit_slot == int(slot) - 1 and not status.is_committed:

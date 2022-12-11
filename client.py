@@ -9,8 +9,7 @@ import aiohttp
 from aiohttp import web
 from random import random
 import hashlib
-
-
+from collections import defaultdict
 
 class View:
     def __init__(self, view_number, num_nodes):
@@ -141,7 +140,7 @@ class Client:
         print(self._nodes)
         self._resend_interval = conf['misc']['network_timeout']
         self._client_id = args.client_id
-        self._num_messages = args.num_messages
+        self._num_messages = len(conf['operationSeq'])
         self._session = None
         self._address = conf['clients'][self._client_id]
         self._client_url = "http://{}:{}".format(self._address['host'], 
@@ -159,6 +158,11 @@ class Client:
         self._dataOp = conf['operationSeq']
         print(conf['operationSeq'])
 
+        self.clientReplyCount = {}
+        self.start_time = 0
+        self.end_time = 0
+        self.totalReply = 0
+
     async def request_view_change(self):
         json_data = {
             "action" : "view change"
@@ -173,7 +177,6 @@ class Client:
             else:
                 self._log.info("---> %d succeed in sending view change message to node %d.", 
                     self._client_id, i)
-
 
 
     async def get_reply(self, request):
@@ -202,21 +205,31 @@ class Client:
 
         if self._status._check_succeed():
             # self._log.info("Get reply from %d", json_data['index'])
-            print("----------IN CLIENT--------", json_data['data'])
+            if (json_data['proposal']['data']['data'], json_data['proposal']['timestamp']) not in self.clientReplyCount:
+                self.clientReplyCount[(json_data['proposal']['data']['data'], json_data['proposal']['timestamp'])] = defaultdict(int)
+                self.clientReplyCount[(json_data['proposal']['data']['data'], json_data['proposal']['timestamp'])]['done'] = False
+            self.clientReplyCount[(json_data['proposal']['data']['data'], json_data['proposal']['timestamp'])][json_data['data']] += 1
+            # print(json_data)
+            if self.clientReplyCount[(json_data['proposal']['data']['data'], json_data['proposal']['timestamp'])][json_data['data']] >= self._f +1 and not self.clientReplyCount[(json_data['proposal']['data']['data'], json_data['proposal']['timestamp'])]['done']:
+                print("----------IN CLIENT-------- Operation: ", (json_data['proposal']['data']['data'], json_data['proposal']['timestamp']), " Value: ", json_data['data'])
+                self.clientReplyCount[(json_data['proposal']['data']['data'], json_data['proposal']['timestamp'])]['done'] = True
+                self.totalReply += 1
+                if self.totalReply == self._num_messages:
+                    self.end_time = time.time()
+                    print(self.end_time - self.start_time)
+                    exit()
             self._is_request_succeed.set()
-
         return web.Response()
 
 
     async def request(self, request):
-        print("===========================")
+        self.start_time = time.time()
+
         if not self._session:
             timeout = aiohttp.ClientTimeout(self._resend_interval)
             self._session = aiohttp.ClientSession(timeout = timeout)
          
         for i in range(self._num_messages):
-            print("/*****************", self._dataOp[i])
-            
             accumulate_failure = 0
             is_sent = False
             dest_ind = 0
@@ -238,7 +251,7 @@ class Client:
                     await asyncio.wait_for(self._is_request_succeed.wait(), self._resend_interval)
                 except:
                     
-                    json_data['timestamp'] = time.time()
+                    json_data['proposal']['timestamp'] = time.time()
                     self._status = Status(self._f)
                     self._is_request_succeed.clear()
                     self._log.info("---> %d message %d sent fail.", self._client_id, i)
@@ -255,8 +268,7 @@ class Client:
                     is_sent = True
                 if is_sent:
                     break
-        await self._session.close()
-    
+        await self._session.close()    
 
 def main():
     logging_config()
@@ -267,7 +279,6 @@ def main():
 
     addr = conf['clients'][args.client_id]
     log.info("begin")
-    
 
     client = Client(conf, args, log)
 
@@ -277,7 +288,7 @@ def main():
 
     loop = asyncio.get_event_loop()
     print("===========================")
-    temp = asyncio.ensure_future(client.request(""), loop=loop)
+    # temp = asyncio.ensure_future(client.request(""), loop=loop)
     # temp = [asyncio.ensure_future(client.request(), loop=loop)]
     print("===========================")
 
@@ -289,13 +300,10 @@ def main():
 
     web.run_app(app, host=host, port=port, access_log=None)
 
-    result = loop.run_until_complete(temp)
+    # result = loop.run_until_complete(temp)
     
     # loop = asyncio.get_event_loop()
     # loop.run_until_complete(client.request())
 
 if __name__ == "__main__":
     main()
-
-            
-    
