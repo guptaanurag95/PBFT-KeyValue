@@ -425,7 +425,6 @@ class KeyValueStore:
 
     def setValue(self, key, value):
         self.keyValue[key] = value
-        print(self.keyValue, "\n")
         return value
 
     def parseData(self, currS):
