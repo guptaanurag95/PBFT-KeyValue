@@ -424,6 +424,7 @@ class KeyValueStore:
 
     def setValue(self, key, value):
         self.keyValue[key] = value
+        print(self.keyValue, "\n")
         return value
 
     def parseData(self, currS):
@@ -457,11 +458,13 @@ class PBFTHandler:
         self._index = index
         # Number of faults tolerant.
         self._f = (self._node_cnt - 1) // 3
+        # Number of nodes marked as faulty
+        self._actual_f = conf['faulty_nodes']
 
         # leader
         self._view = View(0, self._node_cnt)
         self._next_propose_slot = 0
-
+        
         self._keyValue = KeyValueStore()
 
         # TODO: Test fixed
@@ -554,6 +557,17 @@ class PBFTHandler:
         if random() < self._loss_rate:
             await asyncio.sleep(self._network_timeout)
         return resp
+    
+    def randomize_request(self, req_type):
+        print("RANDOMIZE REQUEST")
+        print(req_type)
+        key = chr(randint(97, 122))
+        if req_type == "set":
+            value = randint(1, 100)
+            print(req_type + " " + key + " " + str(value))
+            return req_type + " " + key + " " + str(value)
+        print(req_type + " " + key)
+        return req_type + " " + key
 
     async def _post(self, nodes, command, json_data):
         '''
@@ -567,6 +581,18 @@ class PBFTHandler:
             timeout = aiohttp.ClientTimeout(self._network_timeout)
             self._session = aiohttp.ClientSession(timeout=timeout)
         for i, node in enumerate(nodes):
+            
+            # print(self._node_cnt, self._actual_f, self.json_data)
+            # if node is faulty, change json_data
+            # print(json_data['proposal']['data'])
+            if i >= (self._node_cnt - self._actual_f) and command == PBFTHandler.PREPARE:
+                for slot in json_data['proposal']:
+                    print("FAULTY AT WORK")
+                    print(json_data['proposal'][slot]['data']['data'])
+                    json_data['proposal'][slot]['data']['data'] = self.randomize_request(json_data['proposal'][slot]['data']['data'].split(" ")[0])
+                    # json_data['proposal'][slot]['data']['data'] = "set a 30"
+                
+                
             if random() > self._loss_rate:
                 self._log.debug("make request to %d, %s", i, command)
                 try:

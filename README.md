@@ -49,3 +49,19 @@ Python: 3.5.3
 aiohttp: 3.4.4
 yaml: 3.12
 ```
+
+
+## Testing plan
+
+### Sequences that depict fail stop errors
+blah blah
+
+### Sequences that depict Byzantine faults
+blah blah blah
+
+
+1. Plot overhead of adding PBFT (Time overhead % vs number of nodes)
+1. Number of messages (?)
+1. f vs number of messages / latency
+1. effect of delay on messages vs f - effect on latency / number of messages
+1. byzantine fault in slot selection

@@ -251,7 +251,7 @@ class Client:
                     await asyncio.wait_for(self._is_request_succeed.wait(), self._resend_interval)
                 except:
                     
-                    json_data['proposal']['timestamp'] = time.time()
+                    json_data['timestamp'] = time.time()
                     self._status = Status(self._f)
                     self._is_request_succeed.clear()
                     self._log.info("---> %d message %d sent fail.", self._client_id, i)
