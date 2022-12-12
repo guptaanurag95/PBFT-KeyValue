@@ -267,7 +267,6 @@ class CheckPoint:
             self._session = aiohttp.ClientSession(timeout=timeout)
         for i, node in enumerate(nodes):
             if random() > self._loss_rate:
-                await asyncio.sleep(self._delay_rate)
                 self._log.debug("make request to %d, %s", i, command)
                 try:
                     _ = await self._session.post(
@@ -425,7 +424,6 @@ class KeyValueStore:
 
     def setValue(self, key, value):
         self.keyValue[key] = value
-        print(self.keyValue, "\n")
         return value
 
     def parseData(self, currS):
@@ -459,13 +457,11 @@ class PBFTHandler:
         self._index = index
         # Number of faults tolerant.
         self._f = (self._node_cnt - 1) // 3
-        # Number of nodes marked as faulty
-        self._actual_f = conf['faulty_nodes']
 
         # leader
         self._view = View(0, self._node_cnt)
         self._next_propose_slot = 0
-        
+
         self._keyValue = KeyValueStore()
 
         # TODO: Test fixed
@@ -476,8 +472,6 @@ class PBFTHandler:
 
         # Network simulation
         self._loss_rate = conf['loss%'] / 100
-        self._delay_rate = random() * (conf['delay%'] / 100)
-        print(self._delay_rate, "=======================")
 
         # Time configuration
         self._network_timeout = conf['misc']['network_timeout']
@@ -510,7 +504,6 @@ class PBFTHandler:
         
         self._session = None
         self._log = logging.getLogger(__name__) 
-        self.msg_count = 0
 
 
             
@@ -540,7 +533,6 @@ class PBFTHandler:
         resp_list = []
         for i, node in enumerate(nodes):
             if random() > self._loss_rate:
-                await asyncio.sleep(self._delay_rate)
                 if not self._session:
                     timeout = aiohttp.ClientTimeout(self._network_timeout)
                     self._session = aiohttp.ClientSession(timeout=timeout)
@@ -562,17 +554,6 @@ class PBFTHandler:
         if random() < self._loss_rate:
             await asyncio.sleep(self._network_timeout)
         return resp
-    
-    def randomize_request(self, req_type):
-        print("RANDOMIZE REQUEST")
-        print(req_type)
-        key = chr(randint(97, 122))
-        if req_type == "set":
-            value = randint(1, 100)
-            print(req_type + " " + key + " " + str(value))
-            return req_type + " " + key + " " + str(value)
-        print(req_type + " " + key)
-        return req_type + " " + key
 
     async def _post(self, nodes, command, json_data):
         '''
@@ -586,24 +567,10 @@ class PBFTHandler:
             timeout = aiohttp.ClientTimeout(self._network_timeout)
             self._session = aiohttp.ClientSession(timeout=timeout)
         for i, node in enumerate(nodes):
-            
-            # print(self._node_cnt, self._actual_f, self.json_data)
-            # if node is faulty, change json_data
-            # print(json_data['proposal']['data'])
-            if i >= (self._node_cnt - self._actual_f) and command == PBFTHandler.PREPARE:
-                for slot in json_data['proposal']:
-                    print("FAULTY AT WORK")
-                    print(json_data['proposal'][slot]['data']['data'])
-                    json_data['proposal'][slot]['data']['data'] = self.randomize_request(json_data['proposal'][slot]['data']['data'].split(" ")[0])
-                    # json_data['proposal'][slot]['data']['data'] = "set a 30"
-                
-                
             if random() > self._loss_rate:
-                await asyncio.sleep(self._delay_rate)
                 self._log.debug("make request to %d, %s", i, command)
                 try:
                     _ = await self._session.post(self.make_url(node, command), json=json_data)
-                    self.msg_count += 1
                 except Exception as e:
                     #resp_list.append((i, e))
                     self._log.error(e)
@@ -666,16 +633,33 @@ class PBFTHandler:
         '''
         self._log.info("---> %d: on request", self._index)
 
-        if not self._is_leader:
-            if self._leader != None:
-                raise web.HTTPTemporaryRedirect(self.make_url(
-                    self._nodes[self._leader], PBFTHandler.REQUEST))
-            else:
-                raise web.HTTPServiceUnavailable()
+        json_data = await request.json()
+        await self.temp(json_data)
+        return web.Response()
+
+    async def temp(self, json_data):
+        returnV = self._keyValue.parseData(json_data["data"]["data"])
+        reply_msg = {
+            'index': self._index,
+            'type': Status.REPLY,
+            'data': returnV,
+            'op' : json_data["data"]["data"]
+        }
+        if not self._session:
+            timeout = aiohttp.ClientTimeout(self._network_timeout)
+            self._session = aiohttp.ClientSession(timeout=timeout)
+
+        try:
+            await self._session.post(
+                json_data['client_url'], json=reply_msg)
+        except:
+            self._log.error("Send message failed to %s",
+                            json_data['client_url'])
+            pass
         else:
-            json_data = await request.json()
-            await self.preprepare(json_data)
-            return web.Response()
+            self._log.info("%d reply to %s successfully!!",
+                           self._index, json_data['client_url'])
+
 
     async def prepare(self, request):
         '''
@@ -836,8 +820,7 @@ class PBFTHandler:
                         'view': json_data['view'],
                         'proposal': json_data['proposal'][slot],
                         'type': Status.REPLY,
-                        'data': returnV,
-                        'msgCount': self.msg_count
+                        'data': returnV
                     }
                     status.is_committed = True
                     self._last_commit_slot += 1
