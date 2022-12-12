@@ -267,6 +267,7 @@ class CheckPoint:
             self._session = aiohttp.ClientSession(timeout=timeout)
         for i, node in enumerate(nodes):
             if random() > self._loss_rate:
+                await asyncio.sleep(self._delay_rate)
                 self._log.debug("make request to %d, %s", i, command)
                 try:
                     _ = await self._session.post(
@@ -472,6 +473,8 @@ class PBFTHandler:
 
         # Network simulation
         self._loss_rate = conf['loss%'] / 100
+        self._delay_rate = random() * (conf['delay%'] / 100)
+        print(self._delay_rate, "=======================")
 
         # Time configuration
         self._network_timeout = conf['misc']['network_timeout']
@@ -504,6 +507,7 @@ class PBFTHandler:
         
         self._session = None
         self._log = logging.getLogger(__name__) 
+        self.msg_count = 0
 
 
             
@@ -533,6 +537,7 @@ class PBFTHandler:
         resp_list = []
         for i, node in enumerate(nodes):
             if random() > self._loss_rate:
+                await asyncio.sleep(self._delay_rate)
                 if not self._session:
                     timeout = aiohttp.ClientTimeout(self._network_timeout)
                     self._session = aiohttp.ClientSession(timeout=timeout)
@@ -568,9 +573,11 @@ class PBFTHandler:
             self._session = aiohttp.ClientSession(timeout=timeout)
         for i, node in enumerate(nodes):
             if random() > self._loss_rate:
+                await asyncio.sleep(self._delay_rate)
                 self._log.debug("make request to %d, %s", i, command)
                 try:
                     _ = await self._session.post(self.make_url(node, command), json=json_data)
+                    self.msg_count += 1
                 except Exception as e:
                     #resp_list.append((i, e))
                     self._log.error(e)
@@ -803,7 +810,8 @@ class PBFTHandler:
                         'view': json_data['view'],
                         'proposal': json_data['proposal'][slot],
                         'type': Status.REPLY,
-                        'data': returnV
+                        'data': returnV,
+                        'msgCount': self.msg_count
                     }
                     status.is_committed = True
                     self._last_commit_slot += 1

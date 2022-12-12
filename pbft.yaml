@@ -38,6 +38,8 @@ operationSeq:
 
 loss%: 0
 
+delay%: 0
+
 ckpt_interval: 10
 
 retry_times_before_view_change: 2

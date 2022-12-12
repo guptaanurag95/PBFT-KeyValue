@@ -216,7 +216,7 @@ class Client:
                 self.totalReply += 1
                 if self.totalReply == self._num_messages:
                     self.end_time = time.time()
-                    print(self.end_time - self.start_time)
+                    print(self.end_time - self.start_time, json_data['msgCount'])
                     exit()
             self._is_request_succeed.set()
         return web.Response()
@@ -250,8 +250,7 @@ class Client:
 
                     await asyncio.wait_for(self._is_request_succeed.wait(), self._resend_interval)
                 except:
-                    
-                    json_data['proposal']['timestamp'] = time.time()
+                    json_data['timestamp'] = time.time()
                     self._status = Status(self._f)
                     self._is_request_succeed.clear()
                     self._log.info("---> %d message %d sent fail.", self._client_id, i)
