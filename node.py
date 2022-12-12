@@ -267,7 +267,7 @@ class CheckPoint:
             self._session = aiohttp.ClientSession(timeout=timeout)
         for i, node in enumerate(nodes):
             if random() > self._loss_rate:
-                await asyncio.sleep(self._delay_rate)
+                # await asyncio.sleep(self._delay_rate)
                 self._log.debug("make request to %d, %s", i, command)
                 try:
                     _ = await self._session.post(
@@ -460,6 +460,7 @@ class PBFTHandler:
         self._f = (self._node_cnt - 1) // 3
         # Number of nodes marked as faulty
         self._actual_f = conf['faulty_nodes']
+        self._drop_messages = conf['drop_messages']
 
         # leader
         self._view = View(0, self._node_cnt)
@@ -563,14 +564,10 @@ class PBFTHandler:
         return resp
     
     def randomize_request(self, req_type):
-        print("RANDOMIZE REQUEST")
-        print(req_type)
         key = chr(randint(97, 122))
         if req_type == "set":
             value = randint(1, 100)
-            print(req_type + " " + key + " " + str(value))
             return req_type + " " + key + " " + str(value)
-        print(req_type + " " + key)
         return req_type + " " + key
 
     async def _post(self, nodes, command, json_data):
@@ -590,17 +587,23 @@ class PBFTHandler:
             # if node is faulty, change json_data
             # print(json_data['proposal']['data'])
             if i >= (self._node_cnt - self._actual_f) and command == PBFTHandler.PREPARE:
+                # print("*********===", i)
                 for slot in json_data['proposal']:
-                    print("FAULTY AT WORK")
-                    print(json_data['proposal'][slot]['data']['data'])
+                    # print("FAULTY AT WORK")
+                    # print(json_data['proposal'][slot]['data']['data'])
                     json_data['proposal'][slot]['data']['data'] = self.randomize_request(json_data['proposal'][slot]['data']['data'].split(" ")[0])
                     # json_data['proposal'][slot]['data']['data'] = "set a 30"
-                
+                if self._drop_messages == 1:
+                    continue
+            # elif self._drop_messages == 1 and i >= (self._node_cnt - (self._actual_f*2)) and i < (self._node_cnt - self._actual_f) and command == PBFTHandler.PREPARE:
+            #     print("*********", i)
+            #     continue
                 
             if random() > self._loss_rate:
                 await asyncio.sleep(self._delay_rate)
                 self._log.debug("make request to %d, %s", i, command)
                 try:
+                    # print(self.make_url(node, command), "===============================================")
                     _ = await self._session.post(self.make_url(node, command), json=json_data)
                     self.msg_count += 1
                 except Exception as e:
@@ -653,7 +656,6 @@ class PBFTHandler:
             },
             'type': 'preprepare'
         }
-        
         await self._post(self._nodes, PBFTHandler.PREPARE, preprepare_msg)
 
 
@@ -1099,6 +1101,7 @@ class PBFTHandler:
 
                 self._log.info("%d: Change to be leader!! view_number: %d", 
                     self._index, self._follow_view.get_view())
+                print("============", self._index)
 
                 self._is_leader = True
                 self._view.set_view(self._follow_view.get_view())

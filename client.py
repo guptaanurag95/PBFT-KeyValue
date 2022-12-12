@@ -229,10 +229,10 @@ class Client:
             timeout = aiohttp.ClientTimeout(self._resend_interval)
             self._session = aiohttp.ClientSession(timeout = timeout)
          
+        dest_ind = 0
         for i in range(self._num_messages):
             accumulate_failure = 0
             is_sent = False
-            dest_ind = 0
             self._is_request_succeed = asyncio.Event()
             # Every time succeed in sending message, wait for 0 - 1 second.
             await asyncio.sleep(random())
@@ -245,6 +245,7 @@ class Client:
 
             while 1:
                 try:
+                    print("-----------", dest_ind)
                     self._status = Status(self._f)
                     await self._session.post(make_url(self._nodes[dest_ind], Client.REQUEST), json=json_data)
 

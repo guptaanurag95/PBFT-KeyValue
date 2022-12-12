@@ -30,6 +30,10 @@ operationSeq:
   - data: "set d 3"
   - data: "get d"
   - data: "set e 4"
+  - data: "set d 23"
+  - data: "set a 13"
+  - data: "set b 14"
+  - data: "set e 24"
   - data: "get a"
   - data: "get b"
   - data: "get c"
@@ -45,6 +49,8 @@ ckpt_interval: 10
 retry_times_before_view_change: 2
 
 faulty_nodes: 0
+
+drop_messages: 0
 
 sync_interval: 5
 
