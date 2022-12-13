@@ -586,15 +586,15 @@ class PBFTHandler:
             # print(self._node_cnt, self._actual_f, self.json_data)
             # if node is faulty, change json_data
             # print(json_data['proposal']['data'])
-            if i >= (self._node_cnt - self._actual_f) and command == PBFTHandler.PREPARE:
-                # print("*********===", i)
-                for slot in json_data['proposal']:
-                    # print("FAULTY AT WORK")
-                    # print(json_data['proposal'][slot]['data']['data'])
-                    json_data['proposal'][slot]['data']['data'] = self.randomize_request(json_data['proposal'][slot]['data']['data'].split(" ")[0])
-                    # json_data['proposal'][slot]['data']['data'] = "set a 30"
-                if self._drop_messages == 1:
-                    continue
+            # if self._index >= (self._node_cnt - self._actual_f) and command == PBFTHandler.PREPARE:
+            #     # print("*********===", i)
+            #     for slot in json_data['proposal']:
+            #         # print("FAULTY AT WORK")
+            #         # print(json_data['proposal'][slot]['data']['data'])
+            #         json_data['proposal'][slot]['data']['data'] = self.randomize_request(json_data['proposal'][slot]['data']['data'].split(" ")[0])
+            #         # json_data['proposal'][slot]['data']['data'] = "set a 30"
+            #     if self._drop_messages == 1:
+            #         continue
             # elif self._drop_messages == 1 and i >= (self._node_cnt - (self._actual_f*2)) and i < (self._node_cnt - self._actual_f) and command == PBFTHandler.PREPARE:
             #     print("*********", i)
             #     continue
@@ -828,6 +828,10 @@ class PBFTHandler:
 
                 self._log.debug("Add commit certifiacte to slot %d", int(slot))
                 returnV = self._keyValue.parseData(json_data['proposal'][slot]['data']['data'])
+
+                #Modify key-value store of faulty nodes
+                # if self._index >= (self._node_cnt - self._actual_f):
+                #     returnV = 0
 
             # Reply only once and only when no bubble ahead
                 if self._last_commit_slot == int(slot) - 1 and not status.is_committed:

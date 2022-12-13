@@ -7,12 +7,12 @@ nodes:
       port: 30002
     - host: localhost
       port: 30003
-    # - host: localhost
-    #   port: 30004
-    # - host: localhost
-    #   port: 30005
-    # - host: localhost
-    #   port: 30006
+    - host: localhost
+      port: 30004
+    - host: localhost
+      port: 30005
+    - host: localhost
+      port: 30006
 
 clients:
     - host: localhost
@@ -48,7 +48,7 @@ ckpt_interval: 10
 
 retry_times_before_view_change: 2
 
-faulty_nodes: 0
+faulty_nodes: 2
 
 drop_messages: 0
 
