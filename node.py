@@ -443,6 +443,7 @@ class PBFTHandler:
     PREPARE = 'prepare'
     COMMIT = 'commit'
     REPLY = 'reply'
+    READONLY = 'readonly'
 
     NO_OP = 'NOP'
 
@@ -481,6 +482,7 @@ class PBFTHandler:
 
         # Time configuration
         self._network_timeout = conf['misc']['network_timeout']
+        self._read_opt = conf['read_opt']
 
         # Checkpoint
 
@@ -637,27 +639,66 @@ class PBFTHandler:
                 }
 
         '''
+        if self._read_opt == 1 and json_data["data"]["data"].split(" ")[0] == "get":
+            preprepare_msg = {
+                'leader': self._index,
+                "proposal": {
+                    "0": json_data
+                },
+                'type': 'readOnly'
+            }
+            await self._post(self._nodes, PBFTHandler.READONLY, preprepare_msg)
+        else:
+            this_slot = str(self._next_propose_slot)
+            self._next_propose_slot = int(this_slot) + 1
 
-        this_slot = str(self._next_propose_slot)
-        self._next_propose_slot = int(this_slot) + 1
+            self._log.info("---> %d: on preprepare, propose at slot: %d", 
+                self._index, int(this_slot))
 
-        self._log.info("---> %d: on preprepare, propose at slot: %d", 
-            self._index, int(this_slot))
+            if this_slot not in self._status_by_slot:
+                self._status_by_slot[this_slot] = Status(self._f)
+            self._status_by_slot[this_slot].request = json_data
 
-        if this_slot not in self._status_by_slot:
-            self._status_by_slot[this_slot] = Status(self._f)
-        self._status_by_slot[this_slot].request = json_data
+            preprepare_msg = {
+                'leader': self._index,
+                'view': self._view.get_view(),
+                'proposal': {
+                    this_slot: json_data
+                },
+                'type': 'preprepare'
+            }
+            await self._post(self._nodes, PBFTHandler.PREPARE, preprepare_msg)
 
-        preprepare_msg = {
-            'leader': self._index,
-            'view': self._view.get_view(),
-            'proposal': {
-                this_slot: json_data
-            },
-            'type': 'preprepare'
+    async def process_read_only(self, request):
+        json_data = await request.json()
+
+        self._log.info("---> %d: receive readonly msg from %d", 
+            self._index, json_data['leader'])
+        
+        returnV = self._keyValue.parseData(json_data["proposal"]["0"]["data"]["data"])
+        reply_msg = {
+            'index': self._index,
+            'view': 0,
+            'proposal': json_data['proposal']["0"],
+            'type': Status.REPLY,
+            'data': returnV,
+            'msgCount': self.msg_count
         }
-        await self._post(self._nodes, PBFTHandler.PREPARE, preprepare_msg)
+        if not self._session:
+            timeout = aiohttp.ClientTimeout(self._network_timeout)
+            self._session = aiohttp.ClientSession(timeout=timeout)
 
+        try:
+            await self._session.post(
+                json_data["proposal"]["0"]['client_url'], json=reply_msg)
+        except:
+            self._log.error("Send message failed to %s",
+                            json_data["proposal"]["0"]['client_url'])
+            pass
+        else:
+            self._log.info("%d reply to %s successfully!!",
+                           self._index, json_data["proposal"]["0"]['client_url'])
+        return web.Response()
 
 
     async def get_request(self, request):
@@ -1268,6 +1309,7 @@ def main():
         web.post('/' + PBFTHandler.RECEIVE_SYNC, pbft.receive_sync),
         web.post('/' + PBFTHandler.VIEW_CHANGE_REQUEST, pbft.get_view_change_request),
         web.post('/' + PBFTHandler.VIEW_CHANGE_VOTE, pbft.receive_view_change_vote),
+        web.post('/' + PBFTHandler.READONLY, pbft.process_read_only),
         ])
 
     web.run_app(app, host=host, port=port, access_log=None)

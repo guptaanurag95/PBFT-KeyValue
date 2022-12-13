@@ -59,7 +59,6 @@ class Status:
         input:
             msg_type: self.PREPARE or self.COMMIT
         '''
-        
         for key in self.reply_msgs:
             if len(self.reply_msgs[key].from_nodes)>= self.f + 1:
                 return True
@@ -202,13 +201,15 @@ class Client:
 
         view = View(json_data['view'], len(self._nodes))
         self._status._update_sequence(view, json_data['proposal'], json_data['index'])
-
+        if (json_data['proposal']['data']['data'], json_data['proposal']['timestamp']) not in self.clientReplyCount:
+            self.clientReplyCount[(json_data['proposal']['data']['data'], json_data['proposal']['timestamp'])] = defaultdict(int)
+            self.clientReplyCount[(json_data['proposal']['data']['data'], json_data['proposal']['timestamp'])]['done'] = False
+            self.clientReplyCount[(json_data['proposal']['data']['data'], json_data['proposal']['timestamp'])]['msgCount'] = 0
+        self.clientReplyCount[(json_data['proposal']['data']['data'], json_data['proposal']['timestamp'])][json_data['data']] += 1
+        self.clientReplyCount[(json_data['proposal']['data']['data'], json_data['proposal']['timestamp'])]['msgCount'] += json_data['msgCount']
+        
         if self._status._check_succeed():
             # self._log.info("Get reply from %d", json_data['index'])
-            if (json_data['proposal']['data']['data'], json_data['proposal']['timestamp']) not in self.clientReplyCount:
-                self.clientReplyCount[(json_data['proposal']['data']['data'], json_data['proposal']['timestamp'])] = defaultdict(int)
-                self.clientReplyCount[(json_data['proposal']['data']['data'], json_data['proposal']['timestamp'])]['done'] = False
-            self.clientReplyCount[(json_data['proposal']['data']['data'], json_data['proposal']['timestamp'])][json_data['data']] += 1
             # print(json_data)
             if self.clientReplyCount[(json_data['proposal']['data']['data'], json_data['proposal']['timestamp'])][json_data['data']] >= self._f +1 and not self.clientReplyCount[(json_data['proposal']['data']['data'], json_data['proposal']['timestamp'])]['done']:
                 print("----------IN CLIENT-------- Operation: ", (json_data['proposal']['data']['data'], json_data['proposal']['timestamp']), " Value: ", json_data['data'])
@@ -216,7 +217,10 @@ class Client:
                 self.totalReply += 1
                 if self.totalReply == self._num_messages:
                     self.end_time = time.time()
-                    print(self.end_time - self.start_time, json_data['msgCount'])
+                    print(self.end_time - self.start_time, self.clientReplyCount[(json_data['proposal']['data']['data'], json_data['proposal']['timestamp'])]['msgCount'])
+                    with open('node_inc', 'a') as f:
+                        f.write(str(len(self._nodes)) + " " + str(self.end_time - self.start_time) + " " + str(self.clientReplyCount[(json_data['proposal']['data']['data'], json_data['proposal']['timestamp'])]['msgCount']) + "\n")
+                        f.close()
                     exit()
             self._is_request_succeed.set()
         return web.Response()
