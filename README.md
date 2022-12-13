@@ -62,6 +62,16 @@ blah blah blah
 
 1. Plot overhead of adding PBFT (Time overhead % vs number of nodes)
 1. Number of messages (?)
-1. f vs number of messages / latency
+
+1.* f vs number of messages / latency - no effect of f on latency or number of messages
+
 1. effect of delay on messages vs f - effect on latency / number of messages
 1. byzantine fault in slot selection
+1. why 3f + 1 - we will drop the reply from f non-faulty nodes and another f nodes are displaying byzantine faults.
+
+1. Manually, delete or modify KVS of faulty nodes and check if it still works. return wrong value from KVS : It works
+
+1. Optimize GET operations by reduces messages
+
+1. check effect of multiple clients on time/latency/correctness
+

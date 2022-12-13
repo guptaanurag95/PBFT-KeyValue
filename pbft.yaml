@@ -42,7 +42,7 @@ ckpt_interval: 10
 
 retry_times_before_view_change: 2
 
-faulty_nodes: 0
+faulty_nodes: 2
 
 drop_messages: 0
 
