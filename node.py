@@ -484,6 +484,12 @@ class PBFTHandler:
         self._network_timeout = conf['misc']['network_timeout']
         self._read_opt = conf['read_opt']
 
+        #Wrong value sent
+        self._wrong_val = conf['return_wrong_value']
+        
+        #Randomize request
+        self._rand_request = conf['randomize_request']
+
         # Checkpoint
 
         # After finishing committing self._checkpoint_interval slots,
@@ -588,12 +594,15 @@ class PBFTHandler:
             # print(self._node_cnt, self._actual_f, self.json_data)
             # if node is faulty, change json_data
             # print(json_data['proposal']['data'])
-            if self._index >= (self._node_cnt - self._actual_f) and command == PBFTHandler.COMMIT:
+            if self._rand_request and self._index >= (self._node_cnt - self._actual_f) and command == PBFTHandler.COMMIT:
                 # print("*********===", i)
+                # json_data['id'] = randint(0, self._node_cnt - self._actual_f - 1)
+                # json_data['id'] = 1
                 for slot in json_data['proposal']:
                     # print("FAULTY AT WORK")
                     # print(json_data['proposal'][slot]['data']['data'])
-                    json_data['proposal'][slot]['data']['data'] = self.randomize_request(json_data['proposal'][slot]['data']['data'].split(" ")[0])
+                    # json_data['proposal'][slot]['data']['data'] = self.randomize_request(json_data['proposal'][slot]['data']['data'].split(" ")[0])
+                    json_data['proposal'][slot]['data']['data'] = "set a 40"
                     # json_data['proposal'][slot]['data']['data'] = "set a 30"
             if self._index >= (self._node_cnt - self._actual_f) and self._drop_messages == 1:
                 continue
@@ -868,8 +877,8 @@ class PBFTHandler:
                 returnV = self._keyValue.parseData(json_data['proposal'][slot]['data']['data'])
 
                 #Modify key-value store of faulty nodes
-                # if self._index >= (self._node_cnt - self._actual_f):
-                #     returnV = 0
+                if self._wrong_val and self._index >= (self._node_cnt - self._actual_f):
+                    returnV = randint(1, 100)
 
             # Reply only once and only when no bubble ahead
                 if self._last_commit_slot == int(slot) - 1 and not status.is_committed:
